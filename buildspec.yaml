@@ -38,7 +38,6 @@ phases:
       - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/swiggy:latest"
   post_build:
    commands:
-#    - echo "Performing Trivy image scan after building the image..."
     - aws ses send-email --from "mahesh.pansareit@gmail.com" --to "mahesh.pansareit@gmail.com" --subject "CodeBuild Status: $CODEBUILD_BUILD_ID" --text "Build status: $CODEBUILD_BUILD_STATUS" --region "ap-south-1" 
 
     - trivy image  "$DOCKER_REGISTRY_USERNAME/swiggy:latest" >> trivyimage.txt
