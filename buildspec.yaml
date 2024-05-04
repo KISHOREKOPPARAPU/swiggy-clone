@@ -39,7 +39,6 @@ phases:
   
   post_build:
    commands:
-    - aws ses send-email --from "mahesh.pansareit@gmail.com" --to "mahesh.pansareit@gmail.com" --subject "CodeBuild Status: $CODEBUILD_BUILD_ID" --text "Build status: $CODEBUILD_BUILD_STATUS" --region "ap-south-1" 
     - trivy image  "$DOCKER_REGISTRY_USERNAME/swiggy:latest" >> trivyimage.txt
     - echo "Running OWASP Dependency-Check scan..."
     - cd dependency-check/bin
@@ -47,16 +46,6 @@ phases:
     - echo "Build completed successfully!"
     - echo "Running SonarQube analysis result"
     - sonar-scanner -Dsonar.projectKey=test -Dsonar.sources=. -Dsonar.host.url=http://13.126.65.85:9000
-    - aws ses send-email --from "mahesh.pansareit@gmail.com" --to "mahesh.pansareit@gmail.com" --subject "CodeBuild Status: $CODEBUILD_BUILD_ID" --text "Build status: $CODEBUILD_BUILD_STATUS" --region "ap-south-1" 
-  #     # Update with your preferred AWS region
-
-    - aws ses send-email \
-      --from "mahesh.pansareit@gmail.com" \
-      --to "mahesh.pansareit@gmail.com" \
-      --subject "CodeBuild Status: $CODEBUILD_BUILD_ID" \
-      --text "Build status: $CODEBUILD_BUILD_STATUS" \
-      --region "us-east-1" # Update with your preferred AWS region
-
 
 artifacts:
    files:
